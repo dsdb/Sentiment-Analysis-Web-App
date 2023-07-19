@@ -1,5 +1,5 @@
 import streamlit as st
-from preprocess import preprocess_text
+#from preprocess import preprocess_text
 from transformers import pipeline
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
