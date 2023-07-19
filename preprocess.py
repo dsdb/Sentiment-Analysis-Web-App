@@ -1,10 +1,9 @@
-import pickle
 import nltk
 import re
 from gensim.parsing.preprocessing import remove_stopwords
-from nltk import word_tokenize
 from nltk.stem import WordNetLemmatizer, LancasterStemmer
 from nltk.stem.snowball import EnglishStemmer
+from nltk import word_tokenize
 
 
 tag_re = re.compile(r'<[^>]+>')
@@ -15,8 +14,8 @@ def remove_tags(text):
 def preprocess_text(text):
     lemma = EnglishStemmer()
     #remove urls
-    text = ' '.join(word for work in text.split() if not word.startswith('http'))
-    text = ' '.join(word for work in text.split() if not word.startswith('www'))
+    text = ' '.join(word for word in text.split() if not word.startswith('http'))
+    text = ' '.join(word for word in text.split() if not word.startswith('www'))
     # remove punctions and numbers
     text = re.sub('[^a-zA-Z]', ' ',text)
     # remove single character
@@ -29,4 +28,6 @@ def preprocess_text(text):
     text = re.sub(r'\s+', ' ', text)
     #remove stopsword
     text = remove_stopwords(text.lower())
-    
+    # tokenization
+    text = word_tokenize(text)
+    return text
