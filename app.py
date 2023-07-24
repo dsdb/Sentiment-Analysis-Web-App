@@ -27,7 +27,11 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 # Inference using pipeline()
 classifier = pipeline("sentiment-analysis", model=model, tokenizer=tokenizer)
+X_train = ("Congratulations again on your promotion")
+res_postive = classifier(X_train)
 
+X_train =("We regret to inform you that we no longer have the item from your order in the stock")
+res_negative = classifier(X_train)
 
 
 # Define the Streamlit app
