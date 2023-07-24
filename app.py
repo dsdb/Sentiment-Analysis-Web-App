@@ -1,7 +1,10 @@
 import streamlit as st
 #from preprocess import preprocess_text
+import torch
+import torch.nn.functional as F
 from transformers import pipeline
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSequenceClassification #2407
+
 
 # Load the pre-trained model
 model_name = "distilbert-base-uncased-finetuned-sst-2-english"
@@ -25,12 +28,14 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 # Inference using pipeline()
 classifier = pipeline("sentiment-analysis", model=model, tokenizer=tokenizer)
 
+
+
 # Define the Streamlit app
 
 
 # create the app interface
 st.title('Sentiment Analysis App')
-usr_inp = st.text_input('User:')
+usr_inp = st.text_area('Input Text:')
 #chat_area = st.text_area("Chatbot:", disabled=True)
 
 predict_btn = st.button('Predict')
@@ -39,13 +44,10 @@ predict_btn = st.button('Predict')
 if predict_btn:
 #    input_text = preprocess_text(usr_inp)
     sentiment = classifier(usr_inp)
-    response = sentiment[0]['label']
-    
-    
-
-if usr_inp:
-   # Display the response in the chat area
-   st.text_area("Chatbot:",value = response, height=100, key="chat_area" , )
+    response = sentiment[0]['label']      
+    if usr_inp:
+    # Display the response in the chat area
+        st.text_area("Chatbot:",value=response, height=100, key="chat_area" , )
 
 st.markdown(
    """
